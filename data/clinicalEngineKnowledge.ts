@@ -239,6 +239,3 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
   },
 };
 
-console.log(advancedInterventionBank);
-console.log("advancedInterventionBank loaded:", advancedInterventionBank.length);
-
