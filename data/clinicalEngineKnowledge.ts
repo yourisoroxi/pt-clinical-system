@@ -1,10 +1,4 @@
-export type ClinicalEngineItem = {
-  title: string;
-  content?: string;
-  description?: string;
-  items?: string[];
-  bullets?: string[];
-};
+import type { ClinicalEngineItem } from "@/types/engine";
 
 export type ClinicalEngineRegion = Record<string, ClinicalEngineItem[]>;
 
