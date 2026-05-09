@@ -1,3 +1,4 @@
+import { advancedInterventionBank } from "./advancedInterventionBank";
 import type { ClinicalEngineItem, RegionClinicalEngine } from "@/types/engine";
 
 const commonRedFlags: ClinicalEngineItem[] = [
@@ -238,3 +239,4 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
   },
 };
 
+console.log(advancedInterventionBank);
