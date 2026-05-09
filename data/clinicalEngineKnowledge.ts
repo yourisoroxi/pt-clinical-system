@@ -62,7 +62,9 @@ const createTreatmentDirections = (
 ): TreatmentDirectionItem[] => {
   const makeItem = (name: string): TreatmentDirectionItem => ({
     name,
-    whyItMatters: `${name} supports skilled PT care by addressing orthopedic impairments, movement coordination, tissue load capacity, sport or work-specific functional tolerance, and return-to-activity progression.`,
+    whyItMatters:
+    name +
+    " supports skilled PT care by addressing orthopedic impairments, movement coordination, tissue load capacity, sport or work-specific functional tolerance, and return-to-activity progression.",
     howToUse: [
       "Select based on irritability level, objective movement deficit, tissue loading tolerance, and patient-specific functional goal.",
       "Use OCS-style impairment matching when mobility, strength, joint limitation, or movement coordination is the primary limiter.",
