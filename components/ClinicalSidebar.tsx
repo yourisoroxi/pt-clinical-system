@@ -20,7 +20,7 @@ export function ClinicalSidebar({
   pattern: string;
 }) {
   const [openItem, setOpenItem] = useState<string | null>(null);
-  const engine = clinicalEngineKnowledge[region] ?? clinicalEngineKnowledge.Cervical;
+  const engine = clinicalEngineKnowledge[region as keyof typeof clinicalEngineKnowledge] ?? clinicalEngineKnowledge.Cervical;
 
   function toggleHep(item: string) {
     setSelectedHep(selectedHep.includes(item) ? selectedHep.filter((x) => x !== item) : [...selectedHep, item]);
