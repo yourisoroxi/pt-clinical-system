@@ -1,6 +1,6 @@
-import type { RegionClinicalEngine } from "@/types/engine";
+import type { ClinicalEngineItem, RegionClinicalEngine } from "@/types/engine";
 
-const commonRedFlags = [
+const commonRedFlags: ClinicalEngineItem[] = [
   {
     name: "Progressive neurological deficit",
     whyItMatters: "Progressive weakness, sensory loss, reflex change, or worsening coordination may require medical review.",
@@ -49,8 +49,8 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
       { name: "Peripheral nerve entrapment", howToUse: ["Differentiate symptom location, local compression sensitivity, and neurodynamic response."], treatmentImplication: ["Modify compression positions and dose neural mobility." ] },
     ],
     redFlags: commonRedFlags.concat([
-      { name: "Cervical arterial or central signs", howToUse: ["Screen for severe dizziness, drop attack, diplopia, dysarthria, dysphagia, ataxia, cranial nerve signs."], treatmentImplication: ["Do not proceed with cervical loading/manipulative techniques. Refer as appropriate."], documentationTip: "Use neutral wording: findings may require further medical review." },
-      { name: "Bilateral neurological symptoms", howToUse: ["Clarify bilateral UE/LE symptoms, gait change, hand clumsiness, coordination decline."], treatmentImplication: ["Hold routine progression and consider medical communication." ] },
+      { name: "Cervical arterial or central signs", whyItMatters: "May indicate non-musculoskeletal or central involvement requiring further medical review.", howToUse: ["Screen for severe dizziness, drop attack, diplopia, dysarthria, dysphagia, ataxia, cranial nerve signs."], treatmentImplication: ["Do not proceed with cervical loading/manipulative techniques. Refer as appropriate."], documentationTip: "Use neutral wording: findings may require further medical review." },
+      { name: "Bilateral neurological symptoms", whyItMatters: "May indicate central, spinal cord, or multi-level neurological involvement requiring further review.", howToUse: ["Clarify bilateral UE/LE symptoms, gait change, hand clumsiness, coordination decline."], treatmentImplication: ["Hold routine progression and consider medical communication." ] },
     ]),
     treatmentDirections: [
       { name: "Cervical unloading first", howToUse: ["Use low-irritability manual unloading, supported positioning, and symptom-free ROM."], progressionCriteria: ["Symptoms centralize or remain stable.", "No increase in arm symptoms after session." ] },
@@ -99,7 +99,7 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
     differentials: [
       { name: "Rotator cuff load intolerance" }, { name: "Subacromial pain syndrome" }, { name: "Adhesive capsular pattern" }, { name: "Instability" }, { name: "Cervical referral" }, { name: "AC joint contribution" }
     ],
-    redFlags: commonRedFlags.concat([{ name: "Acute traumatic weakness", treatmentImplication: ["Do not treat as routine soreness. Consider medical review if marked loss of strength follows trauma." ] }]),
+    redFlags: commonRedFlags.concat([{ name: "Acute traumatic weakness", whyItMatters: "New, marked weakness after trauma may indicate serious soft tissue, joint, or neurologic injury that needs prompt evaluation.", howToUse: ["Ask whether strength loss occurred suddenly after injury and if it is disproportionate to pain.", "Compare strength and function to the uninjured side and look for associated sensory or movement changes."], treatmentImplication: ["Do not treat as routine soreness. Consider medical review if marked loss of strength follows trauma."] }]),
     treatmentDirections: [
       { name: "Scapular upward rotation and posterior tilt" }, { name: "Rotator cuff capacity" }, { name: "Thoracic mobility" }, { name: "Overhead graded exposure" }
     ],
@@ -127,7 +127,7 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
     neurodynamic: [{ name: "Slump differentiation" }, { name: "SLR with sensitizers" }, { name: "Femoral nerve tension" }],
     movementImpairments: [{ name: "Lumbar extension compensation" }, { name: "Rib flare" }, { name: "Hip hinge deficit" }, { name: "Protective guarding" }],
     differentials: [{ name: "Lumbar radiculopathy" }, { name: "Discogenic sensitivity" }, { name: "Facet/extension sensitivity" }, { name: "Hip referral" }, { name: "SIJ contribution" }],
-    redFlags: commonRedFlags.concat([{ name: "Cauda equina concern", howToUse: ["Screen saddle anesthesia, bowel/bladder changes, severe progressive neuro deficits."], treatmentImplication: ["Urgent medical review when suspected." ] }]),
+    redFlags: commonRedFlags.concat([{ name: "Cauda equina concern", whyItMatters: "Saddle anesthesia, bowel/bladder changes, or rapidly worsening neurologic deficits may indicate cauda equina compression requiring urgent medical review.", howToUse: ["Screen saddle anesthesia, bowel/bladder changes, severe progressive neuro deficits."], treatmentImplication: ["Urgent medical review when suspected."] }]),
     treatmentDirections: [{ name: "Directional preference strategy" }, { name: "Hip hinge and load transfer" }, { name: "Graded exposure to bending/lifting" }, { name: "Posterior chain loading" }],
     progressionLadders: [{ name: "Lumbar load ladder", howToUse: ["Supine control", "Bridge/dead bug", "Hip hinge", "Loaded hinge", "Carry", "Floor transfer/lift" ] }],
     outcomeMeasures: [{ name: "ODI" }, { name: "PSFS" }, { name: "5xSTS" }, { name: "Walking tolerance" }],
@@ -141,7 +141,7 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
     neurodynamic: [{ name: "Femoral nerve tension" }, { name: "SLR if posterior thigh symptoms" }],
     movementImpairments: [{ name: "Hip drop" }, { name: "Trunk lean" }, { name: "Dynamic valgus" }, { name: "Hip strategy deficit" }],
     differentials: [{ name: "Hip mobility deficit" }, { name: "Gluteal tendinopathy pattern" }, { name: "FAI/anterior hip pain" }, { name: "Lumbar referral" }],
-    redFlags: commonRedFlags.concat([{ name: "Inability to bear weight after trauma" }]),
+    redFlags: commonRedFlags.concat([{ name: "Inability to bear weight after trauma", whyItMatters: "Inability to bear weight after acute trauma can signal fracture, joint disruption, or severe soft tissue injury needing prompt assessment.", howToUse: ["Clarify whether weight-bearing inability began immediately after trauma and whether it is accompanied by severe pain or instability." ] }]),
     treatmentDirections: [{ name: "Hip mobility restoration" }, { name: "Gluteal loading" }, { name: "Single-limb stability" }, { name: "Return-to-run load progression" }],
     progressionLadders: [{ name: "Single-limb ladder", howToUse: ["Bridge", "Side-lying abduction", "Split squat", "Step-down", "Single-leg RDL", "Run prep" ] }],
     outcomeMeasures: [{ name: "LEFS" }, { name: "PSFS" }, { name: "Single-leg squat quality" }],
@@ -155,7 +155,12 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
     neurodynamic: [{ name: "Slump/SLR if radiating symptoms" }, { name: "Femoral nerve tension if anterior thigh symptoms" }],
     movementImpairments: [{ name: "Dynamic valgus" }, { name: "Quad-dominant strategy" }, { name: "Hip drop" }, { name: "Poor eccentric control" }],
     differentials: [{ name: "PFPS load intolerance" }, { name: "Patellar tendon load intolerance" }, { name: "Meniscus irritability" }, { name: "Ligamentous instability" }, { name: "Hip/ankle contribution" }],
-    redFlags: commonRedFlags.concat([{ name: "Acute traumatic swelling" }, { name: "Locked knee" }, { name: "Inability to bear weight" }, { name: "Progressive calf swelling" }]),
+    redFlags: commonRedFlags.concat([
+      { name: "Acute traumatic swelling", whyItMatters: "Rapid swelling after injury may indicate joint effusion, fracture, or ligament rupture requiring careful evaluation.", howToUse: ["Ask when swelling began after the injury and observe whether it develops quickly." ] },
+      { name: "Locked knee", whyItMatters: "Mechanical locking suggests a potential meniscal tear or intra-articular block that may need referral.", howToUse: ["Ask whether the knee catches or locks during bending or straightening and observe active range of motion." ] },
+      { name: "Inability to bear weight", whyItMatters: "Immediate inability to weight-bear after a knee injury may indicate fracture, dislocation, or severe ligament damage.", howToUse: ["Note whether the patient can take even a single step and whether weight-bearing increases pain significantly." ] },
+      { name: "Progressive calf swelling", whyItMatters: "Increasing calf swelling may reflect worsening injury or a vascular concern such as deep vein thrombosis.", howToUse: ["Monitor calf circumference, warmth, and tenderness over time, especially if swelling progresses." ] }
+    ]),
     treatmentDirections: [{ name: "Hip-dominant loading" }, { name: "Frontal plane control" }, { name: "Eccentric control" }, { name: "Running load progression" }],
     progressionLadders: [{ name: "PFPS / single-leg ladder", howToUse: ["Isometric", "DL squat", "Split squat", "Step-down", "Single-leg squat", "Landing", "Run progression" ] }],
     outcomeMeasures: [{ name: "LEFS" }, { name: "KOOS" }, { name: "PSFS" }, { name: "Single-leg step-down quality" }],
@@ -169,7 +174,11 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
     neurodynamic: [{ name: "SLR/tibial nerve bias if plantar symptoms" }, { name: "Peroneal nerve bias if dorsolateral symptoms" }],
     movementImpairments: [{ name: "Medial arch collapse" }, { name: "Toe gripping" }, { name: "Early heel rise" }, { name: "Poor push-off" }],
     differentials: [{ name: "Ankle instability" }, { name: "Achilles load intolerance" }, { name: "Plantar fascia load intolerance" }, { name: "Dorsiflexion mobility deficit" }, { name: "Foot intrinsic control deficit" }],
-    redFlags: commonRedFlags.concat([{ name: "Unable to bear weight after trauma" }, { name: "Severe swelling/bruising" }, { name: "Calf swelling/redness/warmth" }]),
+    redFlags: commonRedFlags.concat([
+      { name: "Unable to bear weight after trauma", whyItMatters: "Unable to bear weight after acute ankle/foot trauma can indicate fracture or severe joint injury needing timely assessment.", howToUse: ["Ask whether the patient could step down after injury and whether pain or instability prevents weight-bearing." ] },
+      { name: "Severe swelling/bruising", whyItMatters: "Marked swelling or bruising after trauma may signal fracture, significant soft tissue injury, or vascular compromise.", howToUse: ["Inspect the extent of swelling and ecchymosis and compare with the opposite limb." ] },
+      { name: "Calf swelling/redness/warmth", whyItMatters: "Calf swelling with redness or warmth may indicate deep vein thrombosis or other acute vascular concern.", howToUse: ["Assess calf tenderness, skin changes, and ask about risk factors for thrombosis." ] }
+    ]),
     treatmentDirections: [{ name: "Dorsiflexion mobility" }, { name: "Tripod foot control" }, { name: "Calf capacity" }, { name: "Balance progression" }, { name: "Gait push-off retraining" }],
     progressionLadders: [{ name: "Ankle stability ladder", howToUse: ["Tripod foot", "DL heel raise", "SL balance", "Reach task", "Foam/head turns", "Hopping prep", "Return-to-run" ] }],
     outcomeMeasures: [{ name: "FAAM" }, { name: "LEFS" }, { name: "Dorsiflexion lunge" }, { name: "Single-leg balance time" }],
@@ -183,7 +192,10 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
     neurodynamic: [{ name: "Radial nerve differentiation" }, { name: "Median nerve screen" }, { name: "Ulnar nerve screen" }],
     movementImpairments: [{ name: "Excessive gripping" }, { name: "Wrist extension collapse" }, { name: "Shoulder/scapular contribution" }],
     differentials: [{ name: "Lateral epicondylalgia" }, { name: "Medial epicondylalgia" }, { name: "Radial tunnel contribution" }, { name: "Cervical referral" }],
-    redFlags: commonRedFlags.concat([{ name: "Acute traumatic deformity" }, { name: "Progressive weakness/numbness" }]),
+    redFlags: commonRedFlags.concat([
+      { name: "Acute traumatic deformity", whyItMatters: "Apparent deformity after elbow trauma may indicate fracture or dislocation requiring urgent evaluation.", howToUse: ["Compare elbow alignment and contour to the other side and ask if appearance changed immediately after injury." ] },
+      { name: "Progressive weakness/numbness", whyItMatters: "Worsening weakness or numbness can suggest nerve injury or compartment involvement that needs further review.", howToUse: ["Clarify whether symptoms are increasing, spreading, or associated with specific arm positions." ] }
+    ]),
     treatmentDirections: [{ name: "Grip load modification" }, { name: "Eccentric tendon loading" }, { name: "Neutral wrist strategy" }],
     progressionLadders: [{ name: "Elbow tendon ladder", howToUse: ["Isometric", "Eccentric", "Concentric", "Grip endurance", "Carry", "Return to gym/tool use" ] }],
     outcomeMeasures: [{ name: "QuickDASH" }, { name: "Grip dynamometry" }, { name: "PSFS" }],
@@ -197,7 +209,10 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
     neurodynamic: [{ name: "Median nerve glide" }, { name: "Ulnar nerve glide" }, { name: "Radial nerve glide" }],
     movementImpairments: [{ name: "Finger over-gripping" }, { name: "Wrist extension collapse" }, { name: "Poor closed-chain tolerance" }],
     differentials: [{ name: "Wrist load intolerance" }, { name: "Median nerve sensitivity" }, { name: "Grip/pinch control deficit" }, { name: "De Quervain pattern" }, { name: "Cervical referral" }],
-    redFlags: commonRedFlags.concat([{ name: "Acute traumatic deformity" }, { name: "Possible fracture signs" }]),
+    redFlags: commonRedFlags.concat([
+      { name: "Acute traumatic deformity", whyItMatters: "Wrist deformity after trauma often suggests fracture or dislocation that requires imaging or referral.", howToUse: ["Inspect wrist alignment, swelling, and deformity immediately after injury." ] },
+      { name: "Possible fracture signs", whyItMatters: "Focal tenderness, severe pain, or functional loss after trauma may indicate a fracture.", howToUse: ["Palpate the distal radius/ulna and carpus for point tenderness and observe motion limitation." ] }
+    ]),
     treatmentDirections: [{ name: "Neutral wrist loading" }, { name: "Grip dosage control" }, { name: "Closed-chain progression" }],
     progressionLadders: [{ name: "Wrist loading ladder", howToUse: ["ROM", "Isometric", "Grip endurance", "Quadruped rocking", "Incline push-up", "Floor push-up modification" ] }],
     outcomeMeasures: [{ name: "QuickDASH" }, { name: "Grip/pinch" }, { name: "PSFS" }],
@@ -211,7 +226,10 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
     neurodynamic: [{ name: "Not primary unless cervical/upper limb symptoms are present" }],
     movementImpairments: [{ name: "Jaw clenching" }, { name: "Mandibular deviation" }, { name: "Cervical guarding" }],
     differentials: [{ name: "Jaw guarding" }, { name: "Clenching/parafunctional habit" }, { name: "Cervical contribution" }, { name: "Disc displacement pattern" }],
-    redFlags: commonRedFlags.concat([{ name: "Unexplained facial numbness" }, { name: "Progressive cranial nerve signs" }]),
+    redFlags: commonRedFlags.concat([
+      { name: "Unexplained facial numbness", whyItMatters: "Facial numbness without clear local cause may signal neurologic or vascular involvement needing prompt review.", howToUse: ["Clarify onset, distribution, and whether symptoms change with jaw motion or posture." ] },
+      { name: "Progressive cranial nerve signs", whyItMatters: "Worsening cranial nerve findings may indicate central or serious neurologic pathology that should be evaluated urgently.", howToUse: ["Screen for diplopia, facial asymmetry, swallowing difficulty, or speech changes." ] }
+    ]),
     treatmentDirections: [{ name: "Jaw relaxation" }, { name: "Tongue resting position" }, { name: "Controlled opening" }, { name: "Cervical contribution management" }],
     progressionLadders: [{ name: "TMJ control ladder", howToUse: ["Tongue rest", "Controlled opening", "Chewing exposure", "Cervical-jaw coordination" ] }],
     outcomeMeasures: [{ name: "Jaw opening measurement" }, { name: "PSFS" }, { name: "Headache frequency tracking" }],
@@ -219,3 +237,4 @@ export const clinicalEngineKnowledge: Record<string, RegionClinicalEngine> = {
     hepCategories: [{ name: "Jaw motor control" }, { name: "Cervical-jaw coordination" }, { name: "Breathing/relaxation" }],
   },
 };
+
