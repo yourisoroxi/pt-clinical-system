@@ -1,14 +1,15 @@
-import type { PatternData, TreatmentItem, SessionFocus, VisitStage } from "@/types/clinical";
+import type { PatternData, SessionFocus, TreatmentItem, VisitStage } from "@/types/clinical";
+import { allSessionFocus, allVisitStages } from "./constants";
 
-const mk = (
+export const mk = (
   text: string,
   tags: string[] = [],
   irritability = ["High", "Moderate", "Low"],
   stage: VisitStage[] = allVisitStages,
   focus: SessionFocus[] = allSessionFocus
-): TreatmentItem => ({ text, tags, irritability, stage, focus });
+): TreatmentItem => ({ text, tags, irritability, stage, focus, clinicApproved: true });
 
-const cueBase: TreatmentItem[] = [
+export const cueBase: TreatmentItem[] = [
   mk("Maintain neutral alignment", ["alignment"], ["High", "Moderate", "Low"], allVisitStages, ["Motor Control", "Functional Retraining", "Strength / Loading"]),
   mk("Reduce compensatory movement", ["compensation"], ["High", "Moderate", "Low"], allVisitStages, ["Motor Control", "Functional Retraining"]),
   mk("Control eccentric phase", ["eccentric"], ["Moderate", "Low"], ["Mid Phase", "Late Phase", "Return to Activity"], ["Strength / Loading", "Return to Run / Sport"]),
@@ -20,7 +21,7 @@ const cueBase: TreatmentItem[] = [
   mk("Monitor symptom behavior during task", ["symptom monitoring"], ["High", "Moderate"], allVisitStages, ["Pain Modulation", "Functional Retraining"]),
 ];
 
-const compBase: TreatmentItem[] = [
+export const compBase: TreatmentItem[] = [
   mk("Protective guarding", ["guarding"], ["High"], ["Initial / Early"], ["Pain Modulation", "Recovery Session"]),
   mk("Breath holding", ["breathing"], ["High", "Moderate"], allVisitStages, ["Pain Modulation", "Motor Control"]),
   mk("Movement avoidance", ["avoidance"], ["High", "Moderate"], ["Initial / Early", "Mid Phase"], ["Pain Modulation", "Functional Retraining"]),
@@ -32,7 +33,7 @@ const compBase: TreatmentItem[] = [
   mk("Asymmetrical loading", ["loading"], ["Moderate", "Low"], allVisitStages, ["Functional Retraining", "Strength / Loading"]),
 ];
 
-const responseBase: TreatmentItem[] = [
+export const responseBase: TreatmentItem[] = [
   mk("Improved movement quality with cueing", ["movement quality"], ["High", "Moderate", "Low"], allVisitStages, ["Motor Control", "Functional Retraining"]),
   mk("Reduced compensatory loading pattern", ["compensation"], ["High", "Moderate", "Low"], allVisitStages, ["Motor Control", "Strength / Loading"]),
   mk("Improved load tolerance during task", ["loading"], ["Moderate", "Low"], ["Mid Phase", "Late Phase", "Return to Activity"], ["Strength / Loading", "Functional Retraining"]),
@@ -44,7 +45,16 @@ const responseBase: TreatmentItem[] = [
   mk("Improved symptom stability during task", ["symptom"], ["High", "Moderate"], allVisitStages, ["Pain Modulation", "Functional Retraining"]),
 ];
 
-function orthoData(region: string, pattern: string, goals: string[], manual: string[], ta: string[], te: string[], cue: string[], comp: string[], resp: string[]): Record<string, PatternData> {
+function orthoData(
+  pattern: string,
+  goals: string[],
+  manual: string[],
+  ta: string[],
+  te: string[],
+  cue: string[],
+  comp: string[],
+  resp: string[]
+): Record<string, PatternData> {
   return {
     [pattern]: {
       goals,
@@ -60,9 +70,8 @@ function orthoData(region: string, pattern: string, goals: string[], manual: str
   };
 }
 
-export const clinicalLibrary: Record<string, Record<string, PatternData>> = {
+export const data: Record<string, Record<string, PatternData>> = {
   Cervical: orthoData(
-    "Cervical",
     "Motor Control Deficit",
     ["Desk tolerance", "Driving rotation", "Overhead reaching", "Computer work tolerance", "Phone use tolerance", "Sleeping tolerance", "Military gear tolerance"],
     ["Suboccipital release", "Cervicothoracic soft tissue mobilization", "Upper trapezius soft tissue mobilization", "Thoracic extension mobilization", "Thoracic rotation mobilization", "Low-grade cervical traction"],
@@ -73,7 +82,6 @@ export const clinicalLibrary: Record<string, Record<string, PatternData>> = {
     ["Improved cervical control with reduced compensation", "Reduced neck tension during reaching", "Improved postural tolerance"]
   ),
   Lumbar: orthoData(
-    "Lumbar",
     "Load Intolerance",
     ["Lifting", "Prolonged sitting", "Walking tolerance", "Sit-to-stand", "Bending tolerance", "Carrying tolerance", "Military fitness task", "Floor transfer"],
     ["Lumbar soft tissue unloading", "Quadratus lumborum soft tissue mobilization", "Lumbar paraspinal soft tissue mobilization", "Hip posterior capsule mobilization", "Low-grade lumbar mobilization"],
@@ -84,7 +92,6 @@ export const clinicalLibrary: Record<string, Record<string, PatternData>> = {
     ["Improved lumbopelvic control", "Improved hip hinge strategy"]
   ),
   Shoulder: orthoData(
-    "Shoulder",
     "Scapular Control Deficit",
     ["Overhead reaching", "Lifting", "Pushing", "Carrying", "Dressing tolerance", "Gym activity", "Push-up preparation"],
     ["Posterior shoulder soft tissue mobilization", "Pectoralis minor soft tissue mobilization", "Thoracic extension mobilization", "Glenohumeral posterior glide", "Scapular mobility facilitation"],
@@ -95,7 +102,6 @@ export const clinicalLibrary: Record<string, Record<string, PatternData>> = {
     ["Improved scapular mechanics during elevation", "Improved arm elevation quality"]
   ),
   Hip: orthoData(
-    "Hip",
     "Single-Limb Control Deficit",
     ["Walking tolerance", "Squat", "Stair negotiation", "Running preparation", "Single-limb stance", "Return to sport preparation"],
     ["Hip posterior capsule mobilization", "Hip flexor soft tissue mobilization", "Gluteal soft tissue mobilization", "Adductor soft tissue mobilization"],
@@ -106,7 +112,6 @@ export const clinicalLibrary: Record<string, Record<string, PatternData>> = {
     ["Improved pelvic control during single-limb loading", "Improved hip-dominant strategy"]
   ),
   Knee: orthoData(
-    "Knee",
     "PFPS Load Intolerance",
     ["Stair negotiation", "Squat tolerance", "Running preparation", "Single-limb loading", "Kneeling tolerance", "Jump/landing preparation"],
     ["Patellar superior/inferior mobilization", "Distal quadriceps soft tissue mobilization", "Lateral thigh soft tissue mobilization", "Posterior knee soft tissue mobilization"],
@@ -117,7 +122,6 @@ export const clinicalLibrary: Record<string, Record<string, PatternData>> = {
     ["Improved loading symmetry", "Reduced anterior knee stress"]
   ),
   "Ankle/Foot": orthoData(
-    "Ankle/Foot",
     "Instability / Load Control Deficit",
     ["Walking", "Running preparation", "Balance", "Stair negotiation", "Uneven surface walking", "Push-off tolerance"],
     ["Ankle dorsiflexion mobilization", "Talocrural posterior glide", "Calf soft tissue mobilization", "First MTP mobilization"],
@@ -128,7 +132,6 @@ export const clinicalLibrary: Record<string, Record<string, PatternData>> = {
     ["Improved foot-ankle stability", "Improved push-off mechanics"]
   ),
   Elbow: orthoData(
-    "Elbow",
     "Tendon Load Intolerance",
     ["Gripping", "Lifting", "Carrying", "Typing tolerance", "Tool use tolerance", "Gym upper-body training"],
     ["Wrist extensor soft tissue mobilization", "Forearm myofascial release"],
@@ -139,7 +142,6 @@ export const clinicalLibrary: Record<string, Record<string, PatternData>> = {
     ["Improved gripping tolerance", "Reduced elbow symptom provocation"]
   ),
   Wrist: orthoData(
-    "Wrist",
     "Wrist / Hand Load Control Deficit",
     ["Typing", "Writing", "Driving", "Weight-bearing tolerance", "Gripping tolerance", "Fine motor control"],
     ["Wrist flexor soft tissue mobilization", "Carpal mobility technique"],
@@ -150,7 +152,6 @@ export const clinicalLibrary: Record<string, Record<string, PatternData>> = {
     ["Improved wrist loading tolerance", "Improved grip control"]
   ),
   TMJ: orthoData(
-    "TMJ",
     "Jaw Guarding / Cervical Contribution",
     ["Jaw opening tolerance", "Chewing tolerance", "Speaking tolerance", "Reduced clenching behavior", "Yawning tolerance"],
     ["Masseter soft tissue mobilization", "Suboccipital release"],
@@ -162,7 +163,7 @@ export const clinicalLibrary: Record<string, Record<string, PatternData>> = {
   ),
 };
 
-const patternAliases: Record<string, string[]> = {
+export const patternAliases: Record<string, string[]> = {
   Cervical: ["Postural Load Intolerance", "Mobility Deficit", "Headache / Cervicogenic Pattern", "Thoracic Contribution Deficit", "Neural Sensitivity"],
   Lumbar: ["Lumbopelvic Motor Control Deficit", "Flexion Sensitivity", "Extension Sensitivity", "Hip Hinge / Load Transfer Deficit", "Radicular / Neural Sensitivity Pattern"],
   Shoulder: ["Rotator Cuff Load Intolerance", "Overhead Mobility Deficit", "Shoulder Impingement Pattern", "Post-op Shoulder Progression"],
@@ -175,7 +176,6 @@ const patternAliases: Record<string, string[]> = {
 };
 
 for (const region of Object.keys(patternAliases)) {
-  const firstPattern = Object.keys(clinicalLibrary[region])[0];
-  for (const alias of patternAliases[region]) clinicalLibrary[region][alias] = clinicalLibrary[region][firstPattern];
+  const firstPattern = Object.keys(data[region])[0];
+  for (const alias of patternAliases[region]) data[region][alias] = data[region][firstPattern];
 }
-

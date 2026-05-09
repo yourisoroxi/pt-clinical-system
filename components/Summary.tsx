@@ -6,9 +6,7 @@ export function Summary({ title, items }: { title: string; items: string[] }) {
         <p className="mt-2 text-slate-500">None selected</p>
       ) : (
         <ul className="mt-2 list-disc space-y-1 pl-5">
-          {items.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
+          {items.map((item) => <li key={item}>{item}</li>)}
         </ul>
       )}
     </div>

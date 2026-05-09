@@ -1,5 +1,7 @@
 export type CptCode = "97140" | "97530" | "97110";
 
+export type LibraryType = "intervention" | "cueing" | "compensation" | "response";
+
 export type VisitStage =
   | "Initial / Early"
   | "Mid Phase"
@@ -16,8 +18,6 @@ export type SessionFocus =
   | "Return to Run / Sport"
   | "Recovery Session";
 
-export type LibraryType = "intervention" | "cueing" | "compensation" | "response";
-
 export type TreatmentItem = {
   text: string;
   tags: string[];
@@ -33,6 +33,15 @@ export type PatternData = {
   cueing: TreatmentItem[];
   compensation: TreatmentItem[];
   response: TreatmentItem[];
+};
+
+export type SelectableItem = {
+  id: string;
+  text: string;
+  custom: boolean;
+  recommended: boolean;
+  clinicApproved: boolean;
+  score: number;
 };
 
 export type ClinicalSupport = {
@@ -54,13 +63,4 @@ export type ClinicalDetail = {
   precautions?: string[];
   treatmentDirection?: string[];
   documentationTip?: string;
-};
-
-export type SelectableItem = {
-  id: string;
-  text: string;
-  custom: boolean;
-  recommended: boolean;
-  clinicApproved: boolean;
-  score: number;
 };

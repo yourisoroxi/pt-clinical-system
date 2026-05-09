@@ -1,7 +1,6 @@
-import type { CptCode, PatternData, SelectableItem, SessionFocus, TreatmentItem, VisitStage } from "@/types/clinical";
+import type { PatternData, SelectableItem, SessionFocus, TreatmentItem, VisitStage } from "@/types/clinical";
 import type { CustomItem } from "@/types/preset";
-import type { Exercise } from "@/types/exercise";
-import { scoreExercise, scoreTreatmentItem } from "./matchingLogic";
+import { scoreTreatmentItem } from "./matchingLogic";
 
 export function recommendedText(
   list: TreatmentItem[],
@@ -18,6 +17,25 @@ export function recommendedText(
     .map((item) => item.text);
 }
 
+export function recommendSession(
+  current: PatternData,
+  irritability: string,
+  visitStage: VisitStage,
+  sessionFocus: SessionFocus,
+  search: string
+) {
+  return {
+    interventions: [
+      ...recommendedText(current.interventions["97140"], irritability, visitStage, sessionFocus, search, 2),
+      ...recommendedText(current.interventions["97530"], irritability, visitStage, sessionFocus, search, 2),
+      ...recommendedText(current.interventions["97110"], irritability, visitStage, sessionFocus, search, 3),
+    ],
+    cueing: recommendedText(current.cueing, irritability, visitStage, sessionFocus, search, 3),
+    compensation: recommendedText(current.compensation, irritability, visitStage, sessionFocus, search, 3),
+    response: recommendedText(current.response, irritability, visitStage, sessionFocus, search, 2),
+  };
+}
+
 export function makeSelectableItems(
   list: TreatmentItem[],
   customList: CustomItem[],
@@ -26,8 +44,9 @@ export function makeSelectableItems(
   sessionFocus: SessionFocus,
   search: string
 ): SelectableItem[] {
-  const normalItems = list
-    .filter((item) => !search.trim() || item.text.toLowerCase().includes(search.toLowerCase()))
+  const filtered = list.filter((item) => !search.trim() || item.text.toLowerCase().includes(search.toLowerCase()));
+
+  const normalItems = filtered
     .map((item) => {
       const score = scoreTreatmentItem(item, irritability, visitStage, sessionFocus, search);
       return {
@@ -51,41 +70,4 @@ export function makeSelectableItems(
   }));
 
   return [...normalItems, ...customMapped];
-}
-
-export function recommendSession(
-  current: PatternData,
-  irritability: string,
-  visitStage: VisitStage,
-  sessionFocus: SessionFocus,
-  search: string
-) {
-  return {
-    interventions: [
-      ...recommendedText(current.interventions["97140"], irritability, visitStage, sessionFocus, search, 2),
-      ...recommendedText(current.interventions["97530"], irritability, visitStage, sessionFocus, search, 2),
-      ...recommendedText(current.interventions["97110"], irritability, visitStage, sessionFocus, search, 3),
-    ],
-    cueing: recommendedText(current.cueing, irritability, visitStage, sessionFocus, search, 3),
-    compensation: recommendedText(current.compensation, irritability, visitStage, sessionFocus, search, 3),
-    response: recommendedText(current.response, irritability, visitStage, sessionFocus, search, 2),
-  };
-}
-
-export function recommendExercises(
-  exercises: Exercise[],
-  region: string,
-  irritability: string,
-  visitStage: string,
-  goal: string,
-  search: string,
-  limit = 6
-) {
-  return [...exercises]
-    .map((exercise) => ({
-      ...exercise,
-      score: scoreExercise(exercise, region, irritability, visitStage, goal, search),
-    }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit);
 }

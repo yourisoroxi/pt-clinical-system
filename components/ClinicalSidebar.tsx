@@ -1,10 +1,8 @@
-"use client";
-
 import { useState } from "react";
-import type { ClinicalDetail, ClinicalSupport } from "@/types/clinical";
-import type { Exercise } from "@/types/exercise";
-import { clinicalDetails } from "@/data/clinicalDetails";
-import { HEPCard } from "./HEPCard";
+import { hepByName } from "@/data/hepDatabase";
+import type { ClinicalSupport } from "@/types/clinical";
+import { HepDetail } from "./HepDetail";
+import { SupportSection } from "./SupportSection";
 
 export function ClinicalSidebar({
   support,
@@ -12,16 +10,12 @@ export function ClinicalSidebar({
   setSelectedHep,
   region,
   pattern,
-  recommendedExercises,
-  onOpenExercise,
 }: {
   support: ClinicalSupport;
   selectedHep: string[];
   setSelectedHep: (items: string[]) => void;
   region: string;
   pattern: string;
-  recommendedExercises: Exercise[];
-  onOpenExercise: (exercise: Exercise) => void;
 }) {
   const [openItem, setOpenItem] = useState<string | null>(null);
 
@@ -44,70 +38,36 @@ export function ClinicalSidebar({
       <SupportSection title="Treatment Direction" items={support.treatmentDirection} openItem={openItem} setOpenItem={setOpenItem} />
 
       <div className="rounded-2xl border bg-slate-50 p-4">
-        <h3 className="mb-1 font-bold">Suggested HEP</h3>
-        <p className="mb-3 text-xs text-slate-500">Click an exercise name to select it or show details.</p>
+        <h3 className="mb-3 font-bold">Suggested HEP</h3>
+        <p className="mb-3 text-xs text-slate-500">Click an exercise name to view instructions, dosage, cueing, common errors, regression, and progression.</p>
         <div className="space-y-2">
-          {recommendedExercises.map((exercise) => (
-            <HEPCard key={exercise.id} exercise={exercise} selected={selectedHep.includes(exercise.name)} onToggle={toggleHep} onOpen={onOpenExercise} />
-          ))}
+          {support.hep.map((item) => {
+            const selected = selectedHep.includes(item);
+            const exercise = hepByName[item];
+            const open = openItem === `HEP:${item}`;
+            return (
+              <div key={item} className="rounded-xl border bg-white p-2">
+                <button
+                  onClick={() => toggleHep(item)}
+                  className={`w-full rounded-lg p-2 text-left text-xs ${selected ? "bg-green-100 font-semibold text-green-900" : "hover:bg-slate-100"}`}
+                >
+                  {selected ? "Selected: " : "+ "}
+                  {item}
+                </button>
+                <button
+                  onClick={() => setOpenItem(open ? null : `HEP:${item}`)}
+                  className="mt-1 rounded-lg bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700"
+                >
+                  {open ? "Hide how-to" : "Show how-to"}
+                </button>
+                {open && exercise && <HepDetail exercise={exercise} />}
+              </div>
+            );
+          })}
         </div>
       </div>
 
       <SupportSection title="Progression Ideas" items={support.progression} openItem={openItem} setOpenItem={setOpenItem} />
     </aside>
-  );
-}
-
-function SupportSection({ title, items, openItem, setOpenItem, alert = false }: { title: string; items: string[]; openItem: string | null; setOpenItem: (item: string | null) => void; alert?: boolean }) {
-  return (
-    <div className={`rounded-2xl border p-4 ${alert ? "border-red-200 bg-red-50" : "bg-slate-50"}`}>
-      <h3 className={`mb-3 font-bold ${alert ? "text-red-800" : "text-slate-800"}`}>{title}</h3>
-      <ul className="space-y-2 text-xs leading-5">
-        {items.map((item) => {
-          const detail = clinicalDetails[item];
-          const open = openItem === item;
-          return (
-            <li key={item} className="rounded-xl bg-white p-2">
-              <button onClick={() => setOpenItem(open ? null : item)} className="w-full text-left font-medium text-slate-800">{item}</button>
-              {detail && (
-                <button onClick={() => setOpenItem(open ? null : item)} className="mt-1 rounded-lg bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">
-                  {open ? "Hide how-to" : "Show how-to"}
-                </button>
-              )}
-              {open && detail && <ClinicalDetailPanel detail={detail} />}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
-
-function ClinicalDetailPanel({ detail }: { detail: ClinicalDetail }) {
-  return (
-    <div className="mt-3 space-y-3 rounded-xl border bg-slate-50 p-3 text-xs leading-5">
-      <DetailList title="How to perform" items={detail.howTo} />
-      {detail.positiveFindings && <DetailList title="Positive finding" items={detail.positiveFindings} />}
-      {detail.clinicalMeaning && <DetailList title="Clinical meaning" items={detail.clinicalMeaning} />}
-      {detail.precautions && <DetailList title="Precautions" items={detail.precautions} />}
-      {detail.treatmentDirection && <DetailList title="Treatment direction" items={detail.treatmentDirection} />}
-      {detail.documentationTip && (
-        <div>
-          <p className="font-bold text-slate-700">Documentation tip</p>
-          <p className="mt-1 rounded-lg bg-white p-2">{detail.documentationTip}</p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function DetailList({ title, items }: { title: string; items: string[] }) {
-  return (
-    <div>
-      <p className="font-bold text-slate-700">{title}</p>
-      <ul className="mt-1 list-disc space-y-1 pl-4">
-        {items.map((item) => <li key={item}>{item}</li>)}
-      </ul>
-    </div>
   );
 }

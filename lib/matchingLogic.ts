@@ -1,5 +1,4 @@
-import type { TreatmentItem, VisitStage, SessionFocus } from "@/types/clinical";
-import type { Exercise } from "@/types/exercise";
+import type { SessionFocus, TreatmentItem, VisitStage } from "@/types/clinical";
 
 export function scoreTreatmentItem(
   item: TreatmentItem,
@@ -13,22 +12,5 @@ export function scoreTreatmentItem(
   if (item.stage.includes(visitStage)) score += 3;
   if (item.focus.includes(sessionFocus)) score += 4;
   if (search && item.text.toLowerCase().includes(search.toLowerCase())) score += 2;
-  return score;
-}
-
-export function scoreExercise(
-  exercise: Exercise,
-  region: string,
-  irritability: string,
-  _visitStage: string,
-  goal: string,
-  search: string
-) {
-  let score = 0;
-  if (exercise.region === region) score += 5;
-  if (exercise.irritability.includes(irritability)) score += 4;
-  if (exercise.patientText.toLowerCase().includes(goal.toLowerCase())) score += 2;
-  if (exercise.category.toLowerCase().includes(goal.toLowerCase())) score += 1;
-  if (search && exercise.name.toLowerCase().includes(search.toLowerCase())) score += 2;
   return score;
 }

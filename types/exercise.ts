@@ -1,11 +1,9 @@
-export type ExerciseDifficulty = "Easy" | "Moderate" | "Advanced";
-
-export type Exercise = {
+export type HepExercise = {
   id: string;
   name: string;
   region: string;
   category: string;
-  difficulty: ExerciseDifficulty;
+  difficulty: "Easy" | "Moderate" | "Advanced";
   irritability: string[];
   equipment: string[];
   dosage: string;
@@ -16,4 +14,7 @@ export type Exercise = {
   regression: string[];
   progression: string[];
   patientText: string;
+  tags?: string[];
+  videoUrl?: string;
+  imageUrl?: string;
 };

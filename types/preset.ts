@@ -1,11 +1,11 @@
-import type { SessionFocus, VisitStage } from "./clinical";
+import type { CptCode, LibraryType, SessionFocus, VisitStage } from "./clinical";
 
 export type CustomItem = {
   id: string;
-  type: "intervention" | "cueing" | "compensation" | "response";
+  type: LibraryType;
   region: string;
   pattern: string;
-  cpt?: "97140" | "97530" | "97110";
+  cpt?: CptCode;
   text: string;
   tags: string[];
 };

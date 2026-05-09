@@ -24,32 +24,18 @@ export function SelectableCard({
               <button
                 onClick={() => onToggle(item.text)}
                 className={`w-full rounded-2xl border p-3 text-left text-sm transition ${
-                  isSelected
-                    ? "border-blue-500 bg-blue-100 font-semibold text-blue-900"
-                    : item.recommended
-                    ? "border-green-300 bg-green-50 hover:bg-green-100"
-                    : "bg-slate-50 hover:bg-slate-100"
+                  isSelected ? "border-blue-500 bg-blue-100 font-semibold text-blue-900" : item.recommended ? "border-green-300 bg-green-50 hover:bg-green-100" : "bg-slate-50 hover:bg-slate-100"
                 }`}
               >
                 {isSelected ? "Selected: " : item.recommended ? "Recommended: " : "+ "}
                 {item.text}
                 <div className="mt-2 flex flex-wrap gap-1">
-                  {item.clinicApproved && (
-                    <span className="rounded-lg bg-green-100 px-2 py-1 text-xs text-green-800">Clinic Approved</span>
-                  )}
-                  {item.custom && (
-                    <span className="rounded-lg bg-purple-100 px-2 py-1 text-xs text-purple-800">My Custom</span>
-                  )}
-                  {item.recommended && !isSelected && (
-                    <span className="rounded-lg bg-blue-100 px-2 py-1 text-xs text-blue-800">Recommended</span>
-                  )}
+                  {item.clinicApproved && <span className="rounded-lg bg-green-100 px-2 py-1 text-xs text-green-800">Clinic Approved</span>}
+                  {item.custom && <span className="rounded-lg bg-purple-100 px-2 py-1 text-xs text-purple-800">My Custom</span>}
+                  {item.recommended && !isSelected && <span className="rounded-lg bg-blue-100 px-2 py-1 text-xs text-blue-800">Recommended</span>}
                 </div>
               </button>
-              {item.custom && (
-                <button onClick={() => onDelete(item.id, item.text)} className="rounded-xl border border-red-200 px-3 text-sm font-bold text-red-600 hover:bg-red-50">
-                  x
-                </button>
-              )}
+              {item.custom && <button onClick={() => onDelete(item.id, item.text)} className="rounded-xl border border-red-200 px-3 text-sm font-bold text-red-600 hover:bg-red-50">x</button>}
             </div>
           );
         })}
