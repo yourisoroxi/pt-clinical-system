@@ -1,17 +1,9 @@
 import type { ClinicalEngineItem } from "@/types";
 
-export type ClinicalEngineRegion = {
-  intakeQuestions: ClinicalEngineItem[];
-  orthopedicTests: ClinicalEngineItem[];
-  neuroScreen: ClinicalEngineItem[];
-  neurodynamic: ClinicalEngineItem[];
-};
+export type ClinicalEngineRegion = Record<string, ClinicalEngineItem[]>;
 
 const createRegion = (): ClinicalEngineRegion => ({
-  intakeQuestions: [],
-  orthopedicTests: [],
-  neuroScreen: [],
-  neurodynamic: [],
+    differentials: [],     hepCategories: [],     intakeQuestions: [],     movementImpairments: [],     neurodynamic: [],     neuroScreen: [],     orthopedicTests: [],     outcomeMeasures: [],     progressionLadders: [],     redFlags: [],     returnToFunction: [],     treatmentDirections: [],
 });
 
 export const clinicalEngineKnowledge: Record<string, ClinicalEngineRegion> = {
