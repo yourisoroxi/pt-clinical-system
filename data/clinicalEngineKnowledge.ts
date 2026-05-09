@@ -1,8 +1,10 @@
+import type { ClinicalEngineItem } from "@/types";
+
 export type ClinicalEngineRegion = {
-  intakeQuestions: string[];
-  orthopedicTests: string[];
-  neuroScreen: string[];
-  neurodynamic: string[];
+  intakeQuestions: ClinicalEngineItem[];
+  orthopedicTests: ClinicalEngineItem[];
+  neuroScreen: ClinicalEngineItem[];
+  neurodynamic: ClinicalEngineItem[];
 };
 
 const createRegion = (): ClinicalEngineRegion => ({
