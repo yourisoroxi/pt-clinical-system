@@ -1,6 +1,13 @@
-import type { Exercise } from "@/types/exercise";
+import type { HepExercise } from "@/types/exercise";
+import { DetailList } from "./DetailList";
 
-export function ExerciseModal({ exercise, onClose }: { exercise: Exercise | null; onClose: () => void }) {
+export function ExerciseModal({
+  exercise,
+  onClose,
+}: {
+  exercise: HepExercise | null;
+  onClose: () => void;
+}) {
   if (!exercise) return null;
 
   return (
@@ -9,30 +16,37 @@ export function ExerciseModal({ exercise, onClose }: { exercise: Exercise | null
         <div className="mb-4 flex items-start justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold">{exercise.name}</h2>
-            <p className="mt-1 text-sm text-slate-500">{exercise.region} - {exercise.category} - {exercise.difficulty}</p>
+            <p className="mt-1 text-sm text-slate-500">
+              {exercise.region} - {exercise.category}
+            </p>
           </div>
-          <button onClick={onClose} className="rounded-xl bg-slate-200 px-3 py-1 text-sm font-bold">Close</button>
+
+          <button
+            onClick={onClose}
+            className="rounded-xl bg-slate-200 px-3 py-1 text-sm font-bold"
+          >
+            Close
+          </button>
         </div>
 
-        <Detail title="Dosage" items={[`${exercise.dosage}, ${exercise.frequency}`]} />
-        <Detail title="Patient explanation" items={[exercise.patientText]} />
-        <Detail title="How to perform" items={exercise.instructions} />
-        <Detail title="Cueing" items={exercise.cueing} />
-        <Detail title="Common errors" items={exercise.commonErrors} />
-        <Detail title="Regression" items={exercise.regression} />
-        <Detail title="Progression" items={exercise.progression} />
-      </div>
-    </div>
-  );
-}
+        <div className="mb-4 rounded-2xl bg-slate-50 p-4">
+          <h3 className="mb-2 font-bold">Dosage</h3>
+          <p className="text-sm">
+            {exercise.dosage}, {exercise.frequency}
+          </p>
+        </div>
 
-function Detail({ title, items }: { title: string; items: string[] }) {
-  return (
-    <div className="mb-4 rounded-2xl bg-slate-50 p-4">
-      <h3 className="mb-2 font-bold">{title}</h3>
-      <ul className="list-disc space-y-1 pl-5 text-sm">
-        {items.map((item) => <li key={item}>{item}</li>)}
-      </ul>
+        <DetailList title="Instructions" items={exercise.instructions} />
+        <DetailList title="Cueing" items={exercise.cueing} />
+        <DetailList title="Common errors" items={exercise.commonErrors} />
+        <DetailList title="Regression" items={exercise.regression} />
+        <DetailList title="Progression" items={exercise.progression} />
+
+        <div className="mt-4 rounded-2xl bg-green-50 p-4">
+          <h3 className="mb-2 font-bold">Patient-friendly text</h3>
+          <p className="text-sm">{exercise.patientText}</p>
+        </div>
+      </div>
     </div>
   );
 }
