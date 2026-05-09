@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { hepByName } from "@/data/hepDatabase";
+import { clinicalEngineKnowledge } from "@/data/clinicalEngineKnowledge";
+import { EngineExpansionSection } from "./EngineExpansionSection";
 import type { ClinicalSupport } from "@/types/clinical";
 import { HepDetail } from "./HepDetail";
 import { SupportSection } from "./SupportSection";
@@ -18,6 +20,7 @@ export function ClinicalSidebar({
   pattern: string;
 }) {
   const [openItem, setOpenItem] = useState<string | null>(null);
+  const engine = clinicalEngineKnowledge[region] ?? clinicalEngineKnowledge.Cervical;
 
   function toggleHep(item: string) {
     setSelectedHep(selectedHep.includes(item) ? selectedHep.filter((x) => x !== item) : [...selectedHep, item]);
@@ -29,6 +32,20 @@ export function ClinicalSidebar({
         <h2 className="text-xl font-bold text-slate-800">Clinical Intelligence</h2>
         <p className="mt-1 text-xs text-slate-500">{region} - {pattern}</p>
       </div>
+
+
+      <EngineExpansionSection title="Clinical Intake Engine" items={engine.intakeQuestions} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="Orthopedic Testing Engine" items={engine.orthopedicTests} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="Neuro Engine" items={engine.neuroScreen} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="Neurodynamic Differentiation" items={engine.neurodynamic} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="Movement Impairment Engine" items={engine.movementImpairments} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="Differential Engine" items={engine.differentials} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="Advanced Red Flag Engine" items={engine.redFlags} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="Treatment Direction Engine" items={engine.treatmentDirections} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="Progression Engine" items={engine.progressionLadders} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="Outcome Measures" items={engine.outcomeMeasures} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="Return-to-Function Pathway" items={engine.returnToFunction} openItem={openItem} setOpenItem={setOpenItem} />
+      <EngineExpansionSection title="HEP Intelligence Categories" items={engine.hepCategories} openItem={openItem} setOpenItem={setOpenItem} />
 
       <SupportSection title="Suggested Tests" items={support.suggestedTests} openItem={openItem} setOpenItem={setOpenItem} />
       <SupportSection title="Neuro Screen" items={support.neuroScreen} openItem={openItem} setOpenItem={setOpenItem} />
