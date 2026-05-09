@@ -973,7 +973,7 @@ function PresetButton({
   return (
     <div className="rounded-2xl border bg-slate-50 p-4">
       <button onClick={() => onLoad(preset)} className="w-full text-left">
-        <p className="font-bold text-slate-800">{preset.favorite ? "??" : ""}{preset.name}</p>
+        <p className="font-bold text-slate-800">{preset.favorite ? "" : ""}{preset.name}</p>
         <p className="mt-1 text-xs text-slate-500">{preset.source} · {preset.goal} · {preset.sessionFocus}</p>
         {preset.clinicApproved && (
           <span className="mt-2 inline-block rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">
@@ -1027,7 +1027,7 @@ function SelectableCard({
                     : "bg-slate-50 hover:bg-slate-100"
                 }`}
               >
-                {isSelected ? "??" : item.recommended ? "??" : "+ "}
+                {isSelected ? "" : item.recommended ? "" : "+ "}
                 {item.text}
                 {item.custom && <span className="ml-2 rounded-lg bg-purple-100 px-2 py-1 text-xs text-purple-800">My Custom</span>}
                 {item.recommended && !isSelected && <span className="ml-2 rounded-lg bg-green-100 px-2 py-1 text-xs text-green-800">Recommended</span>}
