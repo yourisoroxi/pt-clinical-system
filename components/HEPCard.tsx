@@ -19,9 +19,9 @@ export function HEPCard({
       </button>
       <div className="mt-2 flex flex-wrap gap-1">
         <span className="rounded-lg bg-slate-100 px-2 py-1 text-xs">{exercise.category}</span>
-        <span className="rounded-lg bg-slate-100 px-2 py-1 text-xs">{exercise.dosage.sets} sets</span>
-        <span className="rounded-lg bg-slate-100 px-2 py-1 text-xs">{exercise.dosage.reps} reps</span>
+        <span className="rounded-lg bg-slate-100 px-2 py-1 text-xs">{exercise.difficulty}</span>
       </div>
+      <p className="mt-2 text-xs text-slate-600">{exercise.dosage}</p>
       <button onClick={() => onOpen(exercise)} className="mt-3 rounded-lg bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
         Show how-to
       </button>

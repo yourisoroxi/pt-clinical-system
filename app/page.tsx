@@ -267,7 +267,7 @@ export default function Home() {
       "Home Exercise Program\n\n" +
       selectedExercises
         .map((exercise, index) => {
-          return `${index + 1}. ${exercise.name}\nDosage: ${exercise.dosage.sets} sets x ${exercise.dosage.reps}, ${exercise.dosage.frequency}\nInstructions: ${exercise.instructions.join(" ")}\nCueing: ${exercise.cueing.join(" ")}`;
+          return `${index + 1}. ${exercise.name}\nDosage: ${exercise.dosage}, ${exercise.frequency}\nInstructions: ${exercise.instructions.join(" ")}\nCueing: ${exercise.cueing.join(" ")}`;
         })
         .join("\n\n");
 

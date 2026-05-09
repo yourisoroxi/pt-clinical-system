@@ -20,15 +20,15 @@ export function scoreExercise(
   exercise: Exercise,
   region: string,
   irritability: string,
-  visitStage: string,
+  _visitStage: string,
   goal: string,
   search: string
 ) {
   let score = 0;
-  if (exercise.region.includes(region)) score += 5;
+  if (exercise.region === region) score += 5;
   if (exercise.irritability.includes(irritability)) score += 4;
-  if (exercise.stage.includes(visitStage)) score += 3;
-  if (exercise.goals.some((g) => g.toLowerCase().includes(goal.toLowerCase()))) score += 3;
+  if (exercise.patientText.toLowerCase().includes(goal.toLowerCase())) score += 2;
+  if (exercise.category.toLowerCase().includes(goal.toLowerCase())) score += 1;
   if (search && exercise.name.toLowerCase().includes(search.toLowerCase())) score += 2;
   return score;
 }

@@ -46,6 +46,16 @@ export type ClinicalSupport = {
   progression: string[];
 };
 
+export type ClinicalDetail = {
+  title: string;
+  howTo: string[];
+  positiveFindings?: string[];
+  clinicalMeaning?: string[];
+  precautions?: string[];
+  treatmentDirection?: string[];
+  documentationTip?: string;
+};
+
 export type SelectableItem = {
   id: string;
   text: string;
